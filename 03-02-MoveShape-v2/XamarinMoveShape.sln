@@ -7,7 +7,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XamarinMoveShape", "Xamarin
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XamarinMoveShape.UWP", "XamarinMoveShape\XamarinMoveShape.UWP\XamarinMoveShape.UWP.csproj", "{2BB53580-91CA-4E40-A03C-C6E5F0727A9D}"
 EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Xamarin.SignalRClient", "Xamarin.SignalRClient\Xamarin.SignalRClient.shproj", "{0C46A2E2-040A-46D3-B78A-37F252B950DB}"
+EndProject
 Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		Xamarin.SignalRClient\Xamarin.SignalRClient.projitems*{0c46a2e2-040a-46d3-b78a-37f252b950db}*SharedItemsImports = 13
+		Xamarin.SignalRClient\Xamarin.SignalRClient.projitems*{2bb53580-91ca-4e40-a03c-c6e5f0727a9d}*SharedItemsImports = 4
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Ad-Hoc|Any CPU = Ad-Hoc|Any CPU
 		Ad-Hoc|ARM = Ad-Hoc|ARM

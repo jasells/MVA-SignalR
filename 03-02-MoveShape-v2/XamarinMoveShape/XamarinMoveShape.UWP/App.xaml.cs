@@ -33,32 +33,10 @@ namespace XamarinMoveShape.UWP
             this.InitializeComponent();
             this.Suspending += OnSuspending;
 
-            conn = new Microsoft.AspNet.SignalR.Client.HubConnection("http://localhost:24421/");
-
-            hub = conn.CreateHubProxy("moveShape");
-            hub.On<double, double>("shapeMoved", (x, y) =>
-            {
-                int i = 0;
-            });
-
-            //this writes an exception to debug!
-            conn.Start().ContinueWith((t) =>
-            {
-
-                hub.Subscribe("ShapeMoved").Received += RemoteMoveRx;
-
-            });
-
+            //Thought I had to do this... but that was only b/c mismatched JSON.Net lib
+            //between PCL ref and UWP ref.
+            Xamarin.SignalRClient.DepencyInjection.Register();
         }
-
-        private static void RemoteMoveRx(IList<JToken> obj)
-        {
-            int i = 0;
-        }
-
-        Microsoft.AspNet.SignalR.Client.HubConnection conn;
-        Microsoft.AspNet.SignalR.Client.IHubProxy hub;
-
 
         /// <summary>
         /// Invoked when the application is launched normally by the end user.  Other entry points

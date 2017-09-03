@@ -10,10 +10,17 @@ namespace XamarinMoveShape.ViewModels
             Title = item.Text;
             Item = item;
 
+            loc = item.Location.ToString();
             //handle update from model
+            Item.PropertyChanged += Item_PropertyChanged;
+        }
 
-            //set initial xy
-            SetXY(Item.X, item.Y);
+        private void Item_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if(e.PropertyName.Equals("Location"))
+            {
+                Location = Item.Location.ToString();
+            }
         }
 
         int quantity = 1;
@@ -23,19 +30,11 @@ namespace XamarinMoveShape.ViewModels
             set { SetProperty(ref quantity, value); }
         }
 
-        string xy = "(0,0)";
-        public string XY
+        string loc;
+        public string Location
         {
-            get { return xy; }
-            set
-            {
-                SetProperty(ref xy, value);
-            }
-        }
-
-        void SetXY(int X, int Y)
-        {
-            XY = string.Concat("(", X, ",", Y, ")");
+            get { return loc; }
+            set { SetProperty<string>(ref loc, value); }
         }
     }
 }

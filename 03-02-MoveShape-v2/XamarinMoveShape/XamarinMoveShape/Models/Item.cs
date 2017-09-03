@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 
 namespace XamarinMoveShape.Models
 {
@@ -18,51 +19,50 @@ namespace XamarinMoveShape.Models
             set { SetProperty(ref description, value); }
         }
 
+        Location loc;
+        public Location Location
+        {
+            get { return loc; }
+            set { SetProperty(ref loc, value); }
+        }
+
+        public Item()
+        {
+            loc = lastLoc;
+
+            LocationRx += (sender, args) => Location = args;
+        }
+
         static Microsoft.AspNet.SignalR.Client.HubConnection conn;
         static Microsoft.AspNet.SignalR.Client.IHubProxy hub;
 
         static Item()
         {
-            conn = new Microsoft.AspNet.SignalR.Client.HubConnection("http://localhost:24421/");
+            lastLoc = new Location() { X = 0, Y = 0 };
 
-            hub = conn.CreateHubProxy( "moveShape");
+            //conn = Xamarin.Forms.DependencyService.Get<IConnectionFactory>().Conn;
+            conn = new Microsoft.AspNet.SignalR.Client.HubConnection(XamarinMoveShape.Models.Constants.server);
+            hub = conn.CreateHubProxy("moveShape");
 
-            
+            hub.Subscribe("ShapeMoved").Received += RemoteMoveRx;
 
-            Task.Run(async () =>
-           {
-               //this writes an exception to debug!
-               //var t = conn.Start();
-               int i;
-               var t = new Task(() => i = 0);
-
-               t.Start();
-
-               await t;
-               hub.Subscribe("MoveShape").Received += RemoteMoveRx;
-
-           });
+            conn.Start().ContinueWith((t) =>
+            {
+                //check the server for last state to do initial sync?
+            });
         }
+        private static event EventHandler<Location> LocationRx;
 
-        static int lastX, lastY;
+        static Location lastLoc;
 
         private static void RemoteMoveRx(System.Collections.Generic.IList<global::Newtonsoft.Json.Linq.JToken> obj)
         {
-            lastX = 0;
+            LocationRx?.Invoke(null, lastLoc = new XamarinMoveShape.Models.Location()
+            {
+                X = (double)obj[0],
+                Y = (double)obj[1]
+            });
         }
 
-        int x;
-        public int X
-        {
-            get { return x; }
-            set { SetProperty(ref x, value); }
-        }
-
-        int y;
-        public int Y
-        {
-            get { return y; }
-            set { SetProperty(ref y, value); }
-        }
     }
 }

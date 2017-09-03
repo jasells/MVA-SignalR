@@ -7,6 +7,6 @@
 		<Label Text="{Binding Item.Text}" FontSize="Medium"/>
         <Label Text="{Binding Item.Description}" FontSize="Small"/>
         <!--<Label Text="test" FontSize="Small"/>-->
-        <Label Text="{Binding XY}" FontSize="Small"/>
+        <Label Text="{Binding Location}" FontSize="Small"/>
     </StackLayout>
 </ContentPage>
