@@ -27,5 +27,7 @@ namespace XamarinMoveShape.Models
     public static class Constants
     {
         public const string server = "http://localhost:24421/";
+        public const string HubName = "moveShape";
+        public const string ShapeMoved = "ShapeMoved";
     }
 }

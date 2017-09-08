@@ -42,9 +42,9 @@ namespace XamarinMoveShape.Models
 
             //conn = Xamarin.Forms.DependencyService.Get<IConnectionFactory>().Conn;
             conn = new Microsoft.AspNet.SignalR.Client.HubConnection(XamarinMoveShape.Models.Constants.server);
-            hub = conn.CreateHubProxy("moveShape");
+            hub = conn.CreateHubProxy(Constants.HubName);
 
-            hub.Subscribe("ShapeMoved").Received += RemoteMoveRx;
+            hub.Subscribe(Constants.ShapeMoved).Received += RemoteMoveRx;
 
             conn.Start().ContinueWith((t) =>
             {
